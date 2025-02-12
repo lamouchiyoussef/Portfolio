@@ -61,7 +61,7 @@ const NavLinks = ({ mobile }: { mobile?: boolean }) => {
 const SocialLinks = () => (
   <div className="flex items-center space-x-4">
     <a
-      href="https://github.com/yourusername"
+      href="https://github.com/lamouchiyoussef"
       target="_blank"
       rel="noopener noreferrer"
       className="text-gray-600 hover:text-gray-900 transition-colors"
@@ -69,7 +69,7 @@ const SocialLinks = () => (
       <Github size={20} />
     </a>
     <a
-      href="https://linkedin.com/in/yourusername"
+      href="https://www.linkedin.com/in/youssef-lamouchi/"
       target="_blank"
       rel="noopener noreferrer"
       className="text-gray-600 hover:text-gray-900 transition-colors"
@@ -77,7 +77,7 @@ const SocialLinks = () => (
       <Linkedin size={20} />
     </a>
     <a
-      href="mailto:your.email@example.com"
+      href="mailto:youssef.lamouchi@esprit.com"
       className="text-gray-600 hover:text-gray-900 transition-colors"
     >
       <Mail size={20} />
