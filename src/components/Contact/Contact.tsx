@@ -1,160 +1,279 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Loader2,
+  CheckCircle2,
+  AlertCircle,
+  Linkedin,
+  Github,
+} from 'lucide-react';
 import emailjs from '@emailjs/browser';
+import { Section, SectionHeading, Backdrop } from '../ui/Section';
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
-  });
-
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus('loading');
 
-    const templateParams = {
-      name: formData.name,
-      email: formData.email,
-      message: formData.message,
-    };
-
     try {
-      const response = await emailjs.send(
-        'service_s2lccnc', // Remplacez par l'ID de votre service
-        'template_cthfgnc', // Remplacez par l'ID de votre modèle
-        templateParams,
-        'jcL7LQmdR4deOpN9H' // Remplacez par votre clé publique (API Key)
+      await emailjs.send(
+        'service_s2lccnc',
+        'template_cthfgnc',
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+        },
+        'jcL7LQmdR4deOpN9H'
       );
-      
-      console.log('Email envoyé avec succès :', response);
+
       setStatus('success');
-      setFormData({ name: '', email: '', message: '' }); // Réinitialiser le formulaire
+      setFormData({ name: '', email: '', message: '' });
     } catch (error) {
-      console.error('Erreur lors de l\'envoi de l\'email :', error);
+      console.error("Erreur lors de l'envoi de l'email :", error);
       setStatus('error');
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+    if (status === 'success' || status === 'error') setStatus('idle');
   };
 
   return (
-    <section id="contact" className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">Contact</h2>
+    <Section id="contact">
+      <Backdrop variant="both" />
 
-        <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
-          <div>
-            <h3 className="text-xl font-semibold mb-6">Contactez-moi</h3>
-            <p className="text-gray-600 mb-8">
-              N'hésitez pas à me contacter pour discuter de vos projets ou opportunités de collaboration.
+      <SectionHeading
+        eyebrow="Contact"
+        title="Travaillons ensemble"
+        description="Un projet, un poste à pourvoir ou simplement une question ? Ma boîte de réception est ouverte."
+      />
+
+      <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[0.85fr_1.15fr]">
+        {/* Coordonnées */}
+        <div
+          className="reveal flex flex-col gap-4"
+          style={{ '--reveal-delay': '80ms' } as React.CSSProperties}
+        >
+          <ContactCard
+            icon={<Mail className="h-5 w-5" />}
+            title="Email"
+            content="youssef.lamouchi@esprit.tn"
+            href="mailto:youssef.lamouchi@esprit.tn"
+          />
+          <ContactCard
+            icon={<Phone className="h-5 w-5" />}
+            title="Téléphone"
+            content="+216 22 554 114"
+            href="tel:+21622554114"
+          />
+          <ContactCard
+            icon={<MapPin className="h-5 w-5" />}
+            title="Localisation"
+            content="Tunis, Ariana"
+          />
+
+          <div className="glass mt-auto p-6">
+            <p className="mb-4 text-sm leading-relaxed text-slate-400">
+              Vous préférez les réseaux ? On peut aussi échanger là-bas.
             </p>
-
-            <div className="space-y-4">
-              <ContactInfo
-                icon={<Mail className="w-5 h-5" />}
-                title="Email"
-                content="youssef.lamouchi@esprit.tn"
-              />
-              <ContactInfo
-                icon={<Phone className="w-5 h-5" />}
-                title="Téléphone"
-                content="+216 22 554 114"
-              />
-              <ContactInfo
-                icon={<MapPin className="w-5 h-5" />}
-                title="Localisation"
-                content="Tunis, Ariana"
-              />
+            <div className="flex gap-3">
+              <a
+                href="https://www.linkedin.com/in/youssef-lamouchi/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/10 py-2.5 text-sm text-slate-300 transition-colors hover:border-accent/40 hover:text-white"
+              >
+                <Linkedin size={16} />
+                LinkedIn
+              </a>
+              <a
+                href="https://github.com/lamouchiyoussef"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/10 py-2.5 text-sm text-slate-300 transition-colors hover:border-accent/40 hover:text-white"
+              >
+                <Github size={16} />
+                GitHub
+              </a>
             </div>
           </div>
+        </div>
 
-          <div>
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
-                  Nom
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-              </div>
+        {/* Formulaire */}
+        <div
+          className="reveal glass p-7 sm:p-9"
+          style={{ '--reveal-delay': '180ms' } as React.CSSProperties}
+        >
+          <span
+            aria-hidden
+            className="absolute inset-x-9 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent"
+          />
 
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                />
-              </div>
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div className="grid gap-5 sm:grid-cols-2">
+              <Field
+                label="Nom"
+                id="name"
+                value={formData.name}
+                onChange={handleChange}
+                placeholder="Votre nom"
+              />
+              <Field
+                label="Email"
+                id="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                placeholder="vous@exemple.com"
+              />
+            </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">
-                  Message
-                </label>
-                <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  required
-                ></textarea>
-              </div>
+            <div>
+              <Label htmlFor="message">Message</Label>
+              <textarea
+                id="message"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                rows={6}
+                required
+                placeholder="Parlez-moi de votre projet…"
+                className={inputClasses}
+              />
+            </div>
 
-              <button
-                type="submit"
-                className="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                disabled={status === 'loading'}
-              >
-                {status === 'loading' ? 'Envoi en cours...' : 'Envoyer'}
-              </button>
+            <button
+              type="submit"
+              className="btn-primary w-full disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100"
+              disabled={status === 'loading'}
+            >
+              {status === 'loading' ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  Envoi en cours…
+                </>
+              ) : (
+                <>
+                  <Send size={17} />
+                  Envoyer le message
+                </>
+              )}
+            </button>
 
+            <div aria-live="polite">
               {status === 'success' && (
-                <p className="text-green-600 mt-4">Votre message a été envoyé avec succès!</p>
+                <p className="flex items-center gap-2.5 rounded-xl border border-emerald-400/25 bg-emerald-400/10 px-4 py-3 text-sm text-emerald-300">
+                  <CheckCircle2 size={17} className="flex-shrink-0" />
+                  Message envoyé — je vous réponds au plus vite.
+                </p>
               )}
               {status === 'error' && (
-                <p className="text-red-600 mt-4">Une erreur s'est produite. Veuillez réessayer.</p>
+                <p className="flex items-center gap-2.5 rounded-xl border border-red-400/25 bg-red-400/10 px-4 py-3 text-sm text-red-300">
+                  <AlertCircle size={17} className="flex-shrink-0" />
+                  Une erreur s'est produite. Réessayez ou écrivez-moi directement par
+                  email.
+                </p>
               )}
-            </form>
-          </div>
+            </div>
+          </form>
         </div>
       </div>
-    </section>
+    </Section>
   );
 };
 
-const ContactInfo = ({ icon, title, content }: { icon: React.ReactNode; title: string; content: string }) => (
-  <div className="flex items-start">
-    <div className="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center text-blue-600">
-      {icon}
-    </div>
-    <div className="ml-4">
-      <h4 className="text-lg font-medium text-gray-900">{title}</h4>
-      <p className="text-gray-600">{content}</p>
-    </div>
+const inputClasses =
+  'w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-white placeholder:text-slate-600 transition-colors duration-300 focus:border-accent/50 focus:bg-white/[0.05] focus:outline-none focus:ring-1 focus:ring-accent/40';
+
+const Label = ({
+  htmlFor,
+  children,
+}: {
+  htmlFor: string;
+  children: React.ReactNode;
+}) => (
+  <label
+    htmlFor={htmlFor}
+    className="mb-2 block text-xs font-medium uppercase tracking-wider text-slate-400"
+  >
+    {children}
+  </label>
+);
+
+const Field = ({
+  label,
+  id,
+  type = 'text',
+  value,
+  onChange,
+  placeholder,
+}: {
+  label: string;
+  id: string;
+  type?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  placeholder?: string;
+}) => (
+  <div>
+    <Label htmlFor={id}>{label}</Label>
+    <input
+      type={type}
+      id={id}
+      name={id}
+      value={value}
+      onChange={onChange}
+      placeholder={placeholder}
+      required
+      className={inputClasses}
+    />
   </div>
 );
+
+const ContactCard = ({
+  icon,
+  title,
+  content,
+  href,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  content: string;
+  href?: string;
+}) => {
+  const inner = (
+    <>
+      <span className="grid h-11 w-11 flex-shrink-0 place-items-center rounded-xl bg-gradient-to-br from-accent/25 to-cyan-glow/10 text-accent-soft transition-transform duration-500 group-hover:scale-110">
+        {icon}
+      </span>
+      <span className="min-w-0">
+        <span className="block text-xs uppercase tracking-wider text-slate-500">
+          {title}
+        </span>
+        <span className="block truncate text-[15px] text-slate-200">{content}</span>
+      </span>
+    </>
+  );
+
+  const classes = 'glass glass-hover group flex items-center gap-4 p-5';
+
+  return href ? (
+    <a href={href} className={classes}>
+      {inner}
+    </a>
+  ) : (
+    <div className={classes}>{inner}</div>
+  );
+};
 
 export default Contact;

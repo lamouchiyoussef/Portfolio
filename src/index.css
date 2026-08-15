@@ -1,3 +1,119 @@
+/* Résolution de la config relative à ce fichier, pas au dossier de lancement */
+@config "../tailwind.config.js";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    /* Décale l'ancre pour ne pas passer sous le header fixe */
+    scroll-padding-top: 5.5rem;
+  }
+
+  body {
+    @apply bg-ink-900 text-slate-300 font-sans antialiased;
+  }
+
+  ::selection {
+    @apply bg-accent/30 text-white;
+  }
+
+  /* Scrollbar assortie au thème sombre */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-ink-950;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-ink-600 rounded-full border-2 border-ink-950;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-accent/60;
+  }
+
+  :focus-visible {
+    @apply outline-none ring-2 ring-accent ring-offset-2 ring-offset-ink-900 rounded;
+  }
+}
+
+@layer components {
+  /* Carte en verre dépoli, brique de base de tout le site */
+  .glass {
+    @apply relative rounded-2xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-xl;
+  }
+
+  /* Bordure supérieure lumineuse au survol */
+  .glass-hover {
+    @apply transition-all duration-500 hover:border-accent/30 hover:bg-white/[0.05];
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-accent-soft via-white to-cyan-glow bg-clip-text text-transparent;
+    background-size: 200% auto;
+  }
+
+  .btn-primary {
+    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl
+           bg-gradient-to-r from-accent-deep to-accent px-7 py-3.5 font-medium text-white
+           shadow-glow transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98];
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/10
+           bg-white/[0.03] px-7 py-3.5 font-medium text-slate-200 backdrop-blur-sm
+           transition-all duration-300 hover:border-accent/40 hover:bg-accent/10 hover:text-white;
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-white/10 bg-white/[0.04]
+           px-3 py-1 text-xs font-medium text-slate-300 transition-colors;
+  }
+}
+
+@layer utilities {
+  /* Halo coloré diffus placé en fond de section */
+  .orb {
+    @apply pointer-events-none absolute rounded-full blur-[100px];
+  }
+
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* État initial des éléments révélés au scroll (voir useReveal) */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  .reveal.is-visible {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Respect des préférences d'accessibilité : on coupe tout mouvement */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
