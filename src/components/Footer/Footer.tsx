@@ -1,22 +1,5 @@
-import { Github, Linkedin, Mail, ArrowUp } from 'lucide-react';
-
-const LINKS = [
-  { id: 'about', label: 'À propos' },
-  { id: 'experience', label: 'Expérience' },
-  { id: 'skills', label: 'Compétences' },
-  { id: 'projects', label: 'Projets' },
-  { id: 'contact', label: 'Contact' },
-];
-
-const SOCIALS = [
-  { href: 'https://github.com/lamouchiyoussef', label: 'GitHub', Icon: Github },
-  {
-    href: 'https://www.linkedin.com/in/youssef-lamouchi/',
-    label: 'LinkedIn',
-    Icon: Linkedin,
-  },
-  { href: 'mailto:youssef.lamouchi@esprit.tn', label: 'Email', Icon: Mail },
-];
+import { ArrowUp } from 'lucide-react';
+import { NAV_ITEMS as LINKS, PROFILE, SOCIALS } from '../../data/profile';
 
 const Footer = () => {
   return (
@@ -29,18 +12,18 @@ const Footer = () => {
           <div className="max-w-sm">
             <div className="flex items-center gap-3">
               <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-accent-deep to-accent font-display text-sm font-bold text-white">
-                LY
+                {PROFILE.initials}
               </span>
               <div>
                 <h3 className="font-display text-base font-semibold text-white">
-                  Lamouchi Youssef
+                  {PROFILE.name}
                 </h3>
-                <p className="text-xs text-slate-500">Développeur Full Stack</p>
+                <p className="text-xs text-slate-500">{PROFILE.role}</p>
               </div>
             </div>
             <p className="mt-5 text-sm leading-relaxed text-slate-500">
-              Applications web modernes avec Angular et .NET 8. Basé à Tunis,
-              disponible pour de nouveaux projets.
+              Ingénieur en informatique. Applications industrielles avec Angular et
+              .NET 8, basé à Tunis.
             </p>
           </div>
 
@@ -87,7 +70,7 @@ const Footer = () => {
 
         <div className="mt-12 flex flex-col items-center gap-4 border-t border-white/[0.06] pt-7 sm:flex-row sm:justify-between">
           <p className="text-xs text-slate-600">
-            © {new Date().getFullYear()} Lamouchi Youssef. Tous droits réservés.
+            © {new Date().getFullYear()} {PROFILE.name}. Tous droits réservés.
           </p>
           <p className="font-mono text-xs text-slate-600">
             Construit avec React, Vite &amp; Tailwind CSS

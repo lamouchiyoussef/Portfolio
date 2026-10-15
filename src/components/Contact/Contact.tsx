@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { Section, SectionHeading, Backdrop } from '../ui/Section';
+import { PROFILE } from '../../data/profile';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -49,13 +50,13 @@ const Contact = () => {
   };
 
   return (
-    <Section id="contact">
+    <Section id="contact" className="bg-ink-950/40">
       <Backdrop variant="both" />
 
       <SectionHeading
         eyebrow="Contact"
         title="Travaillons ensemble"
-        description="Un projet, un poste à pourvoir ou simplement une question ? Ma boîte de réception est ouverte."
+        description="Un poste Full Stack .NET / Angular, un projet industriel ou une simple question ? Je réponds sous 48 h."
       />
 
       <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[0.85fr_1.15fr]">
@@ -67,19 +68,19 @@ const Contact = () => {
           <ContactCard
             icon={<Mail className="h-5 w-5" />}
             title="Email"
-            content="youssef.lamouchi@esprit.tn"
-            href="mailto:youssef.lamouchi@esprit.tn"
+            content={PROFILE.email}
+            href={`mailto:${PROFILE.email}`}
           />
           <ContactCard
             icon={<Phone className="h-5 w-5" />}
             title="Téléphone"
-            content="+216 22 554 114"
-            href="tel:+21622554114"
+            content={PROFILE.phone}
+            href={PROFILE.phoneHref}
           />
           <ContactCard
             icon={<MapPin className="h-5 w-5" />}
             title="Localisation"
-            content="Tunis, Ariana"
+            content={PROFILE.location}
           />
 
           <div className="glass mt-auto p-6">
@@ -88,7 +89,7 @@ const Contact = () => {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://www.linkedin.com/in/youssef-lamouchi/"
+                href={PROFILE.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/10 py-2.5 text-sm text-slate-300 transition-colors hover:border-accent/40 hover:text-white"
@@ -97,7 +98,7 @@ const Contact = () => {
                 LinkedIn
               </a>
               <a
-                href="https://github.com/lamouchiyoussef"
+                href={PROFILE.github}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/10 py-2.5 text-sm text-slate-300 transition-colors hover:border-accent/40 hover:text-white"

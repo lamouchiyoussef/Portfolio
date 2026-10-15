@@ -1,16 +1,18 @@
 import React from 'react';
-import { ArrowRight, Download, MapPin, Sparkles } from 'lucide-react';
+import { ArrowRight, Download, MapPin, Activity, Gauge, Factory, Users } from 'lucide-react';
 import CV from '../assets/CV_Lamouchi_Youssef.pdf';
 import { useReveal } from '../../hooks/useReveal';
+import { PROFILE, yearsOfExperience } from '../../data/profile';
 
 const Hero = () => {
   const ref = useReveal<HTMLElement>();
+  const years = yearsOfExperience();
 
   return (
     <section
       id="home"
       ref={ref}
-      className="relative flex min-h-screen items-center overflow-hidden pt-24 pb-16"
+      className="relative flex min-h-screen items-center overflow-hidden pt-28 pb-20"
     >
       {/* Décor */}
       <div
@@ -28,7 +30,7 @@ const Hero = () => {
       />
 
       <div className="container relative z-10 mx-auto px-5 sm:px-8">
-        <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-10">
+        <div className="grid items-center gap-16 lg:grid-cols-[1.1fr_1fr] lg:gap-12">
           {/* Colonne texte */}
           <div>
             <div className="reveal mb-7 inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.04] py-1.5 pl-2 pr-4 backdrop-blur-sm">
@@ -37,43 +39,48 @@ const Hero = () => {
                 <span className="absolute h-2 w-2 animate-pulse-ring rounded-full bg-emerald-400" />
               </span>
               <span className="text-xs font-medium text-slate-300">
-                Disponible pour de nouveaux projets
+                Ouvert aux opportunités Full Stack
               </span>
             </div>
 
+            <p
+              className="reveal font-mono text-sm text-accent-soft"
+              style={{ '--reveal-delay': '40ms' } as React.CSSProperties}
+            >
+              Bonjour, je suis
+            </p>
+
             <h1
-              className="reveal font-display text-[2.6rem] font-extrabold leading-[1.05] tracking-tight text-white sm:text-6xl lg:text-[4.25rem]"
+              className="reveal mt-3 font-display text-[2.75rem] font-extrabold leading-[1.02] tracking-tight text-white sm:text-6xl lg:text-[4.5rem]"
               style={{ '--reveal-delay': '80ms' } as React.CSSProperties}
             >
-              Développeur
+              Youssef
               <br />
-              <span className="animate-gradient-pan gradient-text">Full Stack</span>
+              <span className="animate-gradient-pan gradient-text">Lamouchi</span>
             </h1>
 
-            <div
-              className="reveal mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm text-slate-400"
-              style={{ '--reveal-delay': '160ms' } as React.CSSProperties}
+            <p
+              className="reveal mt-6 font-display text-lg font-semibold text-slate-200 sm:text-xl"
+              style={{ '--reveal-delay': '140ms' } as React.CSSProperties}
             >
-              {['Angular', '.NET 8', 'TypeScript', 'SQL'].map((tech, i) => (
-                <React.Fragment key={tech}>
-                  {i > 0 && <span className="text-accent/50">/</span>}
-                  <span>{tech}</span>
-                </React.Fragment>
-              ))}
-            </div>
+              {PROFILE.title}
+              <span className="mx-2.5 text-accent/50">·</span>
+              <span className="whitespace-nowrap text-slate-400">{PROFILE.role}</span>
+            </p>
 
             <p
-              className="reveal text-balance mt-7 max-w-xl text-base leading-relaxed text-slate-400 sm:text-lg"
-              style={{ '--reveal-delay': '240ms' } as React.CSSProperties}
+              className="reveal text-balance mt-6 max-w-xl text-base leading-relaxed text-slate-400 sm:text-[17px]"
+              style={{ '--reveal-delay': '220ms' } as React.CSSProperties}
             >
-              Je conçois des applications web modernes, performantes et pensées pour
-              leurs utilisateurs. {formatExperience()} d'expérience à construire des
-              interfaces Angular et des APIs .NET qui tiennent la charge.
+              {years} ans à concevoir des solutions industrielles —{' '}
+              <span className="text-slate-200">traçabilité, Industrie 4.0 et IoT</span>.
+              J'écris des API REST en .NET 8 et des interfaces Angular rapides, de la
+              maquette à la mise en production.
             </p>
 
             <div
               className="reveal mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap"
-              style={{ '--reveal-delay': '320ms' } as React.CSSProperties}
+              style={{ '--reveal-delay': '300ms' } as React.CSSProperties}
             >
               <a href="#projects" className="btn-primary group">
                 Voir mes projets
@@ -82,37 +89,30 @@ const Hero = () => {
                   className="transition-transform duration-300 group-hover:translate-x-1"
                 />
               </a>
-              <a href="#contact" className="btn-ghost">
-                Me contacter
-              </a>
-              <a href={CV} download="CV_Lamouchi_Youssef.pdf" className="btn-ghost group">
+              <a href={CV} download="CV_Youssef_Lamouchi.pdf" className="btn-ghost group">
                 <Download
                   size={17}
                   className="transition-transform duration-300 group-hover:translate-y-0.5"
                 />
-                Mon CV
+                Télécharger mon CV
               </a>
             </div>
 
             <div
-              className="reveal mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/[0.06] pt-8"
-              style={{ '--reveal-delay': '400ms' } as React.CSSProperties}
+              className="reveal mt-8 flex items-center gap-2 text-sm text-slate-500"
+              style={{ '--reveal-delay': '360ms' } as React.CSSProperties}
             >
-              <Stat value="6+" label="Projets livrés" />
-              <Stat value={formatExperience()} label="D'expérience" />
-              <div className="flex items-center gap-2 text-sm text-slate-400">
-                <MapPin size={15} className="text-accent-soft" />
-                Tunis, Ariana
-              </div>
+              <MapPin size={15} className="text-accent-soft" />
+              {PROFILE.location}
             </div>
           </div>
 
-          {/* Colonne visuelle : carte de code */}
+          {/* Colonne visuelle : tableau de bord d'impact */}
           <div
             className="reveal relative mx-auto w-full max-w-lg lg:max-w-none"
             style={{ '--reveal-delay': '260ms' } as React.CSSProperties}
           >
-            <CodeCard />
+            <ImpactCard years={years} />
           </div>
         </div>
       </div>
@@ -120,19 +120,12 @@ const Hero = () => {
   );
 };
 
-const Stat = ({ value, label }: { value: string; label: string }) => (
-  <div>
-    <div className="font-display text-2xl font-bold text-white">{value}</div>
-    <div className="mt-0.5 text-xs uppercase tracking-wider text-slate-500">
-      {label}
-    </div>
-  </div>
-);
-
-/** Fenêtre de code décorative : plus parlante qu'une photo générique. */
-const CodeCard = () => (
+/**
+ * Carte « tableau de bord » : reprend l'univers des projets (supervision
+ * temps réel) pour présenter les chiffres clés du CV.
+ */
+const ImpactCard = ({ years }: { years: number }) => (
   <div className="relative animate-float">
-    {/* Halo derrière la carte */}
     <div
       aria-hidden
       className="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-accent/25 via-transparent to-cyan-glow/20 blur-2xl"
@@ -140,130 +133,102 @@ const CodeCard = () => (
 
     <div className="glass relative overflow-hidden shadow-card">
       {/* Barre de titre */}
-      <div className="flex items-center gap-2 border-b border-white/[0.07] bg-white/[0.02] px-4 py-3">
-        <span className="h-3 w-3 rounded-full bg-red-400/70" />
-        <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
-        <span className="h-3 w-3 rounded-full bg-emerald-400/70" />
-        <span className="ml-3 font-mono text-xs text-slate-500">
-          developer.ts
+      <div className="flex items-center justify-between border-b border-white/[0.07] bg-white/[0.02] px-5 py-3.5">
+        <div className="flex items-center gap-2">
+          <span className="h-3 w-3 rounded-full bg-red-400/70" />
+          <span className="h-3 w-3 rounded-full bg-yellow-400/70" />
+          <span className="h-3 w-3 rounded-full bg-emerald-400/70" />
+          <span className="ml-3 font-mono text-xs text-slate-500">impact.dashboard</span>
+        </div>
+        <span className="inline-flex items-center gap-1.5 font-mono text-[11px] text-emerald-300">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+          live
         </span>
       </div>
 
-      {/* Code */}
-      <pre className="overflow-x-auto p-5 font-mono text-[12.5px] leading-relaxed sm:text-[13.5px]">
-        <code>
-          <Ln n={1}>
-            <K>const</K> <V>developer</V> <O>:</O> <T>Developer</T> <O>=</O> <P>{'{'}</P>
-          </Ln>
-          <Ln n={2}>
-            {'  '}
-            <A>name</A>
-            <O>:</O> <S>'Lamouchi Youssef'</S>
-            <O>,</O>
-          </Ln>
-          <Ln n={3}>
-            {'  '}
-            <A>role</A>
-            <O>:</O> <S>'Full Stack Developer'</S>
-            <O>,</O>
-          </Ln>
-          <Ln n={4}>
-            {'  '}
-            <A>stack</A>
-            <O>:</O> <P>[</P>
-            <S>'Angular'</S>
-            <O>,</O> <S>'.NET 8'</S>
-            <O>,</O> <S>'SQL'</S>
-            <P>]</P>
-            <O>,</O>
-          </Ln>
-          <Ln n={5}>
-            {'  '}
-            <A>focus</A>
-            <O>:</O> <S>'performance &amp; clean code'</S>
-            <O>,</O>
-          </Ln>
-          <Ln n={6}>
-            {'  '}
-            <A>openToWork</A>
-            <O>:</O> <B>true</B>
-            <O>,</O>
-          </Ln>
-          <Ln n={7}>
-            <P>{'}'}</P>
-            <O>;</O>
-          </Ln>
-        </code>
-      </pre>
+      <div className="grid grid-cols-2 gap-px bg-white/[0.06]">
+        <Metric
+          icon={<Activity size={16} />}
+          value={`${years} ans`}
+          label="d'expérience Full Stack"
+        />
+        <Metric
+          icon={<Gauge size={16} />}
+          value="−60 %"
+          label="temps de chargement (5 s → 2 s)"
+          tone="emerald"
+        />
+        <Metric
+          icon={<Factory size={16} />}
+          value="5"
+          label="lignes de production connectées"
+          tone="cyan"
+        />
+        <Metric
+          icon={<Users size={16} />}
+          value="5"
+          label="clients sur la plateforme B2B"
+        />
+      </div>
 
-      {/* Reflet animé */}
+      {/* Pseudo-graphe de flux capteurs MQTT */}
+      <div className="border-t border-white/[0.07] p-5">
+        <div className="mb-3 flex items-center justify-between font-mono text-[11px] text-slate-500">
+          <span>mqtt://capteurs/ligne-*</span>
+          <span>1 msg / min</span>
+        </div>
+        <div aria-hidden className="flex h-16 items-end gap-1">
+          {BARS.map((h, i) => (
+            <span
+              key={i}
+              className="flex-1 rounded-sm bg-gradient-to-t from-accent/30 to-cyan-glow/70"
+              style={{ height: `${h}%`, opacity: 0.35 + (i / BARS.length) * 0.65 }}
+            />
+          ))}
+        </div>
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {['Angular 18', '.NET 8', 'SQL Server', 'MQTT', 'Docker'].map((t) => (
+            <span key={t} className="chip text-[11px]">
+              {t}
+            </span>
+          ))}
+        </div>
+      </div>
+
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/[0.04] to-transparent"
       />
     </div>
-
-    {/* Badges flottants */}
-    <div className="glass absolute -bottom-6 -left-4 flex items-center gap-2.5 px-4 py-3 shadow-glow sm:-left-8">
-      <Sparkles size={16} className="text-accent-soft" />
-      <span className="text-xs font-medium text-slate-200">Angular + .NET 8</span>
-    </div>
-    <div className="glass absolute -right-3 -top-5 px-4 py-2.5 shadow-glow-cyan sm:-right-6">
-      <span className="font-mono text-xs text-cyan-glow">{'</> clean code'}</span>
-    </div>
   </div>
 );
 
-/* Petits helpers de coloration syntaxique */
-const Ln = ({ n, children }: { n: number; children: React.ReactNode }) => (
-  <span className="block whitespace-pre">
-    <span className="mr-4 inline-block w-3 select-none text-right text-slate-700">
-      {n}
-    </span>
-    {children}
-  </span>
-);
-const K = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-purple-400">{children}</span>
-);
-const V = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-cyan-300">{children}</span>
-);
-const T = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-emerald-300">{children}</span>
-);
-const A = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-sky-300">{children}</span>
-);
-const S = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-amber-200/90">{children}</span>
-);
-const B = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-orange-400">{children}</span>
-);
-const O = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-slate-500">{children}</span>
-);
-const P = ({ children }: { children: React.ReactNode }) => (
-  <span className="text-slate-400">{children}</span>
-);
+const BARS = [38, 52, 44, 61, 48, 70, 58, 66, 54, 78, 63, 72, 85, 69, 80, 74, 90, 82, 76, 88];
 
-/** Expérience calculée depuis le début du poste actuel : jamais à re-éditer. */
-const CAREER_START = new Date(2023, 3); // Avril 2023
-
-const formatExperience = (from: Date = CAREER_START) => {
-  const now = new Date();
-  let months =
-    (now.getFullYear() - from.getFullYear()) * 12 + (now.getMonth() - from.getMonth());
-  if (months < 0) months = 0;
-
-  const years = Math.floor(months / 12);
-  const rest = months % 12;
-
-  const yearPart = years > 0 ? `${years} an${years > 1 ? 's' : ''}` : '';
-  const monthPart = rest > 0 ? `${rest} mois` : '';
-
-  return [yearPart, monthPart].filter(Boolean).join(' et ') || 'Moins d’un mois';
+const TONES = {
+  violet: 'bg-accent/15 text-accent-soft',
+  emerald: 'bg-emerald-400/10 text-emerald-300',
+  cyan: 'bg-cyan-glow/10 text-cyan-glow',
 };
+
+const Metric = ({
+  icon,
+  value,
+  label,
+  tone = 'violet',
+}: {
+  icon: React.ReactNode;
+  value: string;
+  label: string;
+  tone?: keyof typeof TONES;
+}) => (
+  <div className="bg-ink-850/90 p-5">
+    <span className={`mb-3 grid h-8 w-8 place-items-center rounded-lg ${TONES[tone]}`}>
+      {icon}
+    </span>
+    <div className="font-display text-2xl font-bold text-white sm:text-3xl">{value}</div>
+    <div className="mt-1 text-xs leading-snug text-slate-500">{label}</div>
+  </div>
+);
 
 export default Hero;

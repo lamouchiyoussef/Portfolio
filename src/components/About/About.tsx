@@ -1,6 +1,7 @@
 import React from 'react';
-import { Code2, Database, Globe, Target } from 'lucide-react';
+import { Server, Layout, Cpu, Languages, CheckCircle2 } from 'lucide-react';
 import { Section, SectionHeading, Backdrop } from '../ui/Section';
+import { yearsOfExperience } from '../../data/profile';
 
 const About = () => {
   return (
@@ -9,99 +10,98 @@ const About = () => {
 
       <SectionHeading
         eyebrow="À propos"
-        title="Construire du web qui tient dans le temps"
-        description="Développeur Full Stack, je transforme des besoins métier en applications claires, rapides et maintenables."
+        title="Du capteur à l'écran, sans perte en route"
+        description="Ingénieur en informatique, je construis des applications métier qui font remonter la donnée industrielle jusqu'aux bonnes personnes."
       />
 
       <div className="grid gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-16">
         {/* Récit */}
         <div className="reveal space-y-5 text-[15px] leading-relaxed text-slate-400">
           <p>
-            Je suis un développeur Full Stack passionné par la création
-            d'applications web modernes, performantes et adaptées aux besoins des
-            utilisateurs.
+            Développeur Full Stack depuis {yearsOfExperience()} ans chez{' '}
+            <Hl>Canadian System Technology</Hl>, je travaille sur des solutions
+            industrielles : <Hl>traçabilité de production</Hl>, Industrie 4.0 et IoT.
           </p>
           <p>
-            Mon parcours m'a permis de bâtir une solide expertise dans le
-            développement frontend avec{' '}
-            <Hl>Angular et React</Hl>, ainsi que dans le développement backend avec{' '}
-            <Hl>.NET 8, Express.js</Hl> et l'intégration de protocoles comme{' '}
-            <Hl>MQTT</Hl>.
+            Je suis spécialisé dans la conception d'<Hl>API REST avec .NET 8 / ASP.NET
+            Core</Hl> et d'<Hl>interfaces Angular performantes</Hl>, au sein d'une
+            équipe Agile / Scrum de six développeurs — de la maquette jusqu'à la mise
+            en production.
           </p>
           <p>
-            Je travaille également avec des technologies avancées comme Tailwind CSS
-            pour un design élégant et réactif, et je maîtrise la gestion des bases de
-            données relationnelles (SQL) et non relationnelles (MongoDB).
+            Côté terrain, j'ai mis en place l'acquisition de données capteurs à la
+            minute via <Hl>MQTT</Hl> sur cinq lignes de production. Côté utilisateur,
+            j'ai ramené le temps de chargement d'une application de 5 s à 2 s grâce au
+            lazy loading, à la stratégie OnPush et à la mise en cache.
           </p>
           <p>
-            Toujours curieux et motivé, je reste constamment à l'affût des dernières
-            innovations pour offrir des solutions robustes et évolutives. Ma passion
-            pour le développement va de pair avec une approche centrée sur la qualité :
-            des applications aux standards modernes et faciles à maintenir.
+            Formé en <Hl>Ingénierie Cloud à ESPRIT</Hl> en cours du soir, j'automatise
+            aussi le déploiement avec Docker, GitLab CI/CD et Ansible.
           </p>
 
           <div className="grid gap-4 pt-6 sm:grid-cols-3">
             <SkillCard
-              icon={<Globe className="h-5 w-5" />}
-              title="Frontend"
-              description="Interfaces modernes avec Angular & React"
+              icon={<Server className="h-5 w-5" />}
+              title="Backend"
+              description=".NET 8, ASP.NET Core, EF Core, API sécurisées JWT"
               delay={0}
             />
             <SkillCard
-              icon={<Database className="h-5 w-5" />}
-              title="Backend"
-              description="APIs robustes avec .NET 8 & Express.js"
+              icon={<Layout className="h-5 w-5" />}
+              title="Frontend"
+              description="Angular 18, RxJS, TypeScript, Tailwind CSS"
               delay={90}
             />
             <SkillCard
-              icon={<Code2 className="h-5 w-5" />}
-              title="Full Stack"
-              description="Intégration complète front ↔ back"
+              icon={<Cpu className="h-5 w-5" />}
+              title="Industrie 4.0"
+              description="MQTT, capteurs temps réel, intégration ERP"
               delay={180}
             />
           </div>
         </div>
 
-        {/* Objectifs */}
+        {/* Ce que j'apporte */}
         <div
-          className="reveal"
+          className="reveal space-y-6"
           style={{ '--reveal-delay': '150ms' } as React.CSSProperties}
         >
-          <div className="glass glass-hover group p-8">
-            {/* Filet lumineux en haut de carte */}
+          <div className="glass glass-hover p-8">
             <span
               aria-hidden
               className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent"
             />
 
-            <div className="mb-8 flex items-center gap-3">
-              <span className="grid h-10 w-10 place-items-center rounded-xl bg-accent/15 text-accent-soft">
-                <Target className="h-5 w-5" />
-              </span>
-              <h3 className="font-display text-xl font-semibold text-white">
-                Mes objectifs
-              </h3>
-            </div>
+            <h3 className="mb-6 font-display text-xl font-semibold text-white">
+              Ce que j'apporte à une équipe
+            </h3>
 
-            <ol className="space-y-6">
-              {GOALS.map((goal, index) => (
-                <li key={goal} className="flex gap-4">
-                  <span className="grid h-8 w-8 flex-shrink-0 place-items-center rounded-lg border border-accent/20 bg-accent/10 font-mono text-sm font-medium text-accent-soft">
-                    {index + 1}
-                  </span>
-                  <span className="pt-1 text-[15px] leading-relaxed text-slate-300">
-                    {goal}
-                  </span>
+            <ul className="space-y-4">
+              {STRENGTHS.map((item) => (
+                <li key={item} className="flex gap-3 text-[15px] leading-relaxed text-slate-300">
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent-soft" />
+                  {item}
                 </li>
               ))}
-            </ol>
+            </ul>
+          </div>
 
-            <div className="mt-8 border-t border-white/[0.06] pt-6">
-              <p className="font-mono text-xs leading-relaxed text-slate-500">
-                <span className="text-accent-soft">{'// '}</span>
-                Ouvert aux opportunités Full Stack, Angular ou .NET.
-              </p>
+          <div className="glass p-6">
+            <div className="mb-4 flex items-center gap-2.5">
+              <Languages className="h-[18px] w-[18px] text-cyan-glow" />
+              <h3 className="font-display text-base font-semibold text-white">Langues</h3>
             </div>
+            <dl className="grid grid-cols-3 gap-3">
+              {LANGUAGES.map(({ name, level }) => (
+                <div
+                  key={name}
+                  className="rounded-xl border border-white/[0.06] bg-white/[0.02] px-3 py-3 text-center"
+                >
+                  <dt className="text-sm font-medium text-slate-200">{name}</dt>
+                  <dd className="mt-0.5 text-xs text-slate-500">{level}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </div>
@@ -109,10 +109,17 @@ const About = () => {
   );
 };
 
-const GOALS = [
-  'Créer des applications web performantes et évolutives',
-  'Approfondir mes connaissances en architecture logicielle',
-  'Contribuer à des projets innovants et impactants',
+const STRENGTHS = [
+  'Une vision de bout en bout : base de données, API, interface et déploiement',
+  'Le réflexe performance : mesurer, optimiser, prouver le gain',
+  "L'habitude du terrain industriel : ERP, postes de production, capteurs",
+  'La rigueur d\'équipe : Scrum, revues de code, tests unitaires',
+];
+
+const LANGUAGES = [
+  { name: 'Arabe', level: 'Maternelle' },
+  { name: 'Français', level: 'Pro (B2)' },
+  { name: 'Anglais', level: 'Pro (B2)' },
 ];
 
 const Hl = ({ children }: { children: React.ReactNode }) => (
