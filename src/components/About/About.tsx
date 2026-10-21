@@ -41,8 +41,9 @@ const About = () => {
             lazy loading, à la stratégie OnPush et à la mise en cache.
           </p>
           <p>
-            Formé en <Hl>Ingénierie Cloud à ESPRIT</Hl> en cours du soir, j'automatise
-            aussi le déploiement avec Docker, GitLab CI/CD et Ansible.
+            <Hl>Diplômé ingénieur en informatique d'ESPRIT</Hl> (cycle Ingénierie Cloud,
+            en cours du soir), j'automatise aussi le déploiement avec Docker, GitLab CI/CD,
+            Azure DevOps et Ansible.
           </p>
 
           <div className="grid gap-4 pt-6 sm:grid-cols-3">

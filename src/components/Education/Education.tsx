@@ -3,19 +3,34 @@ import { GraduationCap, Award, HeartHandshake, MapPin } from 'lucide-react';
 import { Section, SectionHeading, Backdrop } from '../ui/Section';
 import { useScrollFill } from '../../hooks/useScrollFill';
 
-const DEGREES = [
+/** Données issues du CV et du profil LinkedIn. */
+const DEGREES: {
+  date?: string;
+  title: string;
+  school: string;
+  location: string;
+  note?: string;
+  badge?: string;
+}[] = [
   {
     date: '2022 — 2026',
-    title: "Cycle d'Ingénierie Cloud",
-    note: 'Cours du soir, en parallèle de mon poste',
+    title: "Diplôme national d'ingénieur en informatique",
+    badge: 'Diplômé',
+    note: 'Cycle Ingénierie Cloud en cours du soir · PFE : RTOM, plateforme MES Industrie 4.0',
     school: 'ESPRIT — École Supérieure Privée d’Ingénierie et de Technologie',
     location: 'Tunis',
   },
   {
-    date: '2019 — 2022',
+    date: 'Sept. 2019 — Juin 2022',
     title: 'Licence appliquée en Technologie de l’informatique',
+    badge: 'Mention excellent',
     school: 'Institut Supérieur des Études Technologiques (ISET) de Siliana',
     location: 'Siliana',
+  },
+  {
+    title: 'Baccalauréat — Sciences techniques',
+    school: 'Lycée technique Hannibal',
+    location: 'Ariana',
   },
 ];
 
@@ -58,7 +73,14 @@ const Education = () => {
                 <GraduationCap className="h-5 w-5" />
               </span>
               <div className="min-w-0">
-                <span className="font-mono text-xs text-accent-soft">{d.date}</span>
+                <div className="flex flex-wrap items-center gap-2">
+                  {d.date && <span className="font-mono text-xs text-accent-soft">{d.date}</span>}
+                  {d.badge && (
+                    <span className="rounded-full border border-emerald-400/25 bg-emerald-400/10 px-2 py-0.5 text-[11px] font-medium text-emerald-300">
+                      {d.badge}
+                    </span>
+                  )}
+                </div>
                 <h3 className="mt-1.5 font-display text-lg font-semibold leading-snug text-white">
                   {d.title}
                 </h3>

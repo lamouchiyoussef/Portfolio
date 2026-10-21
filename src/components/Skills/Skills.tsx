@@ -41,6 +41,9 @@ import {
   Factory,
   Route,
   Workflow,
+  Boxes,
+  Infinity as InfinityIcon,
+  MessageSquareText,
 } from 'lucide-react';
 import { Section, SectionHeading, Backdrop } from '../ui/Section';
 import { useTilt } from '../../hooks/useTilt';
@@ -93,6 +96,7 @@ const CATEGORIES: Category[] = [
       { name: 'API REST', icon: { lucide: Braces, color: '#22D3EE' } },
       { name: 'SignalR', icon: { lucide: Workflow, color: '#22D3EE' } },
       { name: 'JWT', icon: { brand: siJsonwebtokens } },
+      { name: 'Clean Archi · CQRS', icon: { lucide: Boxes, color: '#C4B5FD' } },
       { name: 'Swagger', icon: { brand: siSwagger } },
       { name: 'Express.js', icon: { brand: siNodedotjs } },
     ],
@@ -111,7 +115,7 @@ const CATEGORIES: Category[] = [
   },
   {
     title: 'Intelligence artificielle',
-    description: 'Vision par ordinateur en production',
+    description: 'Vision par ordinateur et données en langage naturel',
     span: 'lg:col-span-2',
     icon: <BrainCircuit className="h-5 w-5" />,
     accent: 'from-fuchsia-400 to-pink-400',
@@ -120,6 +124,7 @@ const CATEGORIES: Category[] = [
       { name: 'FastAPI', icon: { brand: siFastapi } },
       { name: 'PyTorch', icon: { brand: siPytorch } },
       { name: 'Vision par ordinateur', icon: { lucide: ScanSearch, color: '#F472B6' } },
+      { name: 'Requêtes en langage naturel', icon: { lucide: MessageSquareText, color: '#F472B6' } },
     ],
   },
   {
@@ -131,6 +136,8 @@ const CATEGORIES: Category[] = [
     techs: [
       { name: 'Docker', icon: { brand: siDocker } },
       { name: 'GitLab CI/CD', icon: { brand: siGitlab } },
+      { name: 'Azure DevOps', icon: { lucide: InfinityIcon, color: '#4FA3F7' } },
+      { name: 'Azure', icon: { lucide: Cloud, color: '#4FA3F7' } },
       { name: 'Ansible', icon: { brand: siAnsible, color: '#F87171' } },
       { name: 'Git', icon: { brand: siGit } },
       { name: 'Linux', icon: { brand: siLinux } },
