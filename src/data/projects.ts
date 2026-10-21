@@ -5,16 +5,24 @@ import food from '../components/assets/food.jpg';
 import labo from '../components/assets/labo.jpg';
 import gitlabProjects from './gitlab-projects.json';
 import { GITLAB_OVERRIDES } from './gitlab-overrides';
+import { GITLAB_CURATED_PROJECTS } from './projects-gitlab';
 
 /**
  * Source unique des projets affichés sur le site.
  *
- * - MANUAL_PROJECTS : projets décrits à la main (code propriétaire, hors GitLab).
+ * - MANUAL_PROJECTS : projets décrits à la main (code propriétaire).
+ * - projects-gitlab.ts : projets analysés dans les dépôts GitLab privés.
  * - gitlab-projects.json : généré par `npm run sync:gitlab`, ne pas éditer.
  * - gitlab-overrides.ts : corrections et choix éditoriaux sur les projets GitLab.
  */
 
-export type ProjectCategory = 'professionnel' | 'personnel' | 'academique' | 'stage' | 'autre';
+export type ProjectCategory =
+  | 'professionnel'
+  | 'freelance'
+  | 'personnel'
+  | 'academique'
+  | 'stage'
+  | 'autre';
 export type ProjectStatus = 'termine' | 'en-cours' | 'experimental' | 'archive';
 
 export interface ProjectLink {
@@ -51,6 +59,7 @@ export interface Project {
 
 export const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   professionnel: 'Professionnel',
+  freelance: 'Freelance',
   personnel: 'Personnel',
   academique: 'Académique',
   stage: 'Stage / PFE',
@@ -116,7 +125,6 @@ const MANUAL_PROJECTS: Project[] = [
     ],
     docs: [],
     visibility: 'private',
-    featured: true,
     priority: 90,
     origin: 'manual',
   },
@@ -134,26 +142,37 @@ const MANUAL_PROJECTS: Project[] = [
     demos: [],
     docs: [],
     visibility: 'private',
-    featured: true,
     priority: 80,
     origin: 'manual',
   },
   {
     id: 'industrie-40',
-    title: 'Industrie 4.0 — Suivi de production',
-    tagline: 'Remontée des machines en MQTT et visualisation des indicateurs de production.',
+    title: 'Industrie 4.0 — Suivi de production (MES)',
+    tagline:
+      "Suivi de production connecté : remontée des machines, applications mobiles pour l'atelier et pour le gérant.",
     description:
-      'Suivi de production industrielle connecté : les machines remontent leurs données via MQTT et les indicateurs sont visualisés dans une interface Angular.',
+      "Solution MES de suivi de production industrielle. Les machines remontent leurs données en temps réel et deux applications mobiles s'appuient sur la même API : une application opérateur pour l'atelier, et une application de supervision en lecture seule pour le gérant (production du jour, rejets, TRS, équipes par ligne).",
     category: 'professionnel',
-    technologies: ['Angular', '.NET 8', 'SQL Server', 'MQTT'],
-    features: ['Remontée des données machines via MQTT', 'Visualisation des indicateurs'],
+    status: 'en-cours',
+    date: '2026-10-21',
+    technologies: ['Angular 18', 'Ionic', 'Capacitor', '.NET', 'SQL Server', 'SignalR', 'MQTT'],
+    features: [
+      'App opérateur : ordres de fabrication, lignes de production, prélèvements, arrêts',
+      'Visualisation temps réel et monitoring des machines',
+      'App gérant (lecture seule) : production du jour bon / brut, taux de rejet',
+      'Indicateurs TRS et disponibilité, OF actifs et en retard, alertes',
+      'Équipes par ligne : présence, heures travaillées, machine et OF',
+    ],
+    architecture:
+      'Frontend web Angular · API .NET + SQL Server · deux apps mobiles Ionic 8 / Angular 18 / Capacitor 8 partageant la même API et la même authentification.',
     image: industrie,
     demos: [
       { label: 'Démo', href: 'https://drive.google.com/file/d/1MXuMq4rUuHyy4dVBXskIsFr1TL_iGKC-/view?usp=sharing' },
     ],
     docs: [],
     visibility: 'private',
-    priority: 70,
+    featured: true,
+    priority: 92,
     origin: 'manual',
   },
   {
@@ -249,6 +268,7 @@ const fromGitlab = (p: GitlabProject): Project | null => {
 
 export const PROJECTS: Project[] = [
   ...MANUAL_PROJECTS,
+  ...GITLAB_CURATED_PROJECTS,
   ...(gitlabProjects as GitlabProject[])
     .map(fromGitlab)
     .filter((p): p is Project => p !== null),

@@ -1,5 +1,7 @@
 import { useMemo, useState } from 'react';
-import type { Project, ProjectCategory } from '../data/projects';
+import { CATEGORY_LABELS, type Project, type ProjectCategory } from '../data/projects';
+
+const CATEGORY_ORDER = Object.keys(CATEGORY_LABELS) as ProjectCategory[];
 
 export type SortMode = 'pertinence' | 'date';
 
@@ -23,7 +25,7 @@ export const useProjectFilters = (projects: Project[]) => {
       for (const t of p.technologies) counts.set(t, (counts.get(t) ?? 0) + 1);
     }
     return {
-      categories: [...cats],
+      categories: CATEGORY_ORDER.filter((c) => cats.has(c)),
       technologies: [...counts.entries()]
         .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
         .map(([t]) => t),

@@ -26,7 +26,7 @@ const Projects = () => {
       {lead && (
         <div className="mb-20">
           <SubHeading>À la une</SubHeading>
-          <div className="grid gap-6 md:grid-cols-2">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             <FeaturedCard project={lead} onOpen={setSelected} />
             {others.map((p) => (
               <ProjectCard key={p.id} project={p} onOpen={setSelected} />
@@ -160,7 +160,7 @@ const SubHeading = ({ children }: { children: React.ReactNode }) => (
 
 /** Projet principal : occupe toute la largeur, image et texte côte à côte. */
 const FeaturedCard = ({ project, onOpen }: { project: Project; onOpen: (p: Project) => void }) => (
-  <article className="reveal glass group grid overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-glow md:col-span-2 lg:grid-cols-[1.1fr_1fr]">
+  <article className="reveal glass group grid overflow-hidden transition-all duration-500 hover:border-accent/30 hover:shadow-glow md:col-span-2 lg:col-span-3 lg:grid-cols-[1.1fr_1fr]">
     <div className="relative min-h-[240px] overflow-hidden lg:min-h-[340px]">
       {project.image ? (
         <img
