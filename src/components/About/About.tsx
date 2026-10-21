@@ -29,6 +29,12 @@ const About = () => {
             en production.
           </p>
           <p>
+            Ce qui m'anime, c'est l'<Hl>architecture logicielle</Hl> : découper un
+            système en modules clairs, choisir le bon canal entre le terrain et l'écran
+            (MQTT, SignalR, API REST) et garder un code que toute l'équipe peut faire
+            évoluer.
+          </p>
+          <p>
             Côté terrain, j'ai mis en place l'acquisition de données capteurs à la
             minute via <Hl>MQTT</Hl> sur cinq lignes de production. Côté utilisateur,
             j'ai ramené le temps de chargement d'une application de 5 s à 2 s grâce au
@@ -66,7 +72,7 @@ const About = () => {
           className="reveal space-y-6"
           style={{ '--reveal-delay': '150ms' } as React.CSSProperties}
         >
-          <div className="glass glass-hover p-8">
+          <div className="glass glass-hover glow-border p-8">
             <span
               aria-hidden
               className="absolute inset-x-8 top-0 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent"
@@ -138,10 +144,10 @@ const SkillCard = ({
   delay: number;
 }) => (
   <div
-    className="reveal glass glass-hover group p-5"
+    className="reveal glass glass-hover glow-border group p-5"
     style={{ '--reveal-delay': `${delay}ms` } as React.CSSProperties}
   >
-    <span className="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-accent/25 to-cyan-glow/10 text-accent-soft transition-transform duration-500 group-hover:scale-110">
+    <span className="mb-4 grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-accent/25 to-cyan-glow/10 text-accent-soft icon-pop">
       {icon}
     </span>
     <h3 className="mb-1.5 font-display text-base font-semibold text-white">

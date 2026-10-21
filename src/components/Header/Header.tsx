@@ -10,11 +10,25 @@ const Header = () => {
   const [scrolled, setScrolled] = React.useState(false);
   const active = useActiveSection(SECTION_IDS);
 
+  const progressRef = React.useRef<HTMLSpanElement>(null);
+
   React.useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24);
+    let frame = 0;
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24);
+      // Progression écrite directement dans le style : pas de re-rendu par frame.
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        const max = document.documentElement.scrollHeight - window.innerHeight;
+        progressRef.current?.style.setProperty('transform', `scaleX(${max > 0 ? window.scrollY / max : 0})`);
+      });
+    };
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', onScroll);
+    };
   }, []);
 
   // Empêche le défilement de l'arrière-plan quand le menu mobile est ouvert.
@@ -33,6 +47,12 @@ const Header = () => {
           : 'border-b border-transparent bg-transparent'
       }`}
     >
+      {/* Barre de progression du défilement */}
+      <span
+        ref={progressRef}
+        aria-hidden
+        className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-accent via-accent-soft to-cyan-glow"
+      />
       <nav className="container mx-auto px-5 sm:px-8">
         <div className="flex h-[72px] items-center justify-between">
           <a href="#home" className="group flex items-center gap-3">

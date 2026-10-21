@@ -5,15 +5,34 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Angle animable pour les bordures dégradées (repli statique sans @property). */
+@property --border-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
 @layer base {
   html {
     scroll-behavior: smooth;
     /* Décale l'ancre pour ne pas passer sous le header fixe */
     scroll-padding-top: 5.5rem;
+    color-scheme: dark;
   }
 
   body {
     @apply bg-ink-900 text-slate-300 font-sans antialiased;
+    /* Lumières diffuses fixes : profondeur sans coût au scroll */
+    background-image:
+      radial-gradient(60rem 40rem at 85% -10%, rgba(139, 92, 246, 0.09), transparent 60%),
+      radial-gradient(50rem 35rem at -10% 40%, rgba(34, 211, 238, 0.05), transparent 60%);
+    background-attachment: fixed;
+  }
+
+  h1,
+  h2,
+  h3 {
+    @apply text-slate-50;
   }
 
   ::selection {
@@ -40,36 +59,123 @@
 }
 
 @layer components {
-  /* Carte en verre dépoli, brique de base de tout le site */
+  /* Surface de carte : brique de base de tout le site */
   .glass {
-    @apply relative rounded-2xl border border-white/[0.07] bg-white/[0.03] backdrop-blur-xl;
+    @apply relative rounded-2xl border border-white/[0.07] bg-ink-800/75 backdrop-blur-xl;
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.04) inset;
   }
 
-  /* Bordure supérieure lumineuse au survol */
   .glass-hover {
-    @apply transition-all duration-500 hover:border-accent/30 hover:bg-white/[0.05];
+    @apply transition-[border-color,background-color,box-shadow,transform] duration-500
+           hover:border-accent/30 hover:bg-ink-800/90;
+  }
+
+  /* Bordure dégradée violet → cyan qui tourne au survol */
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--border-angle),
+      transparent 0deg,
+      rgba(139, 92, 246, 0.9) 70deg,
+      rgba(34, 211, 238, 0.9) 140deg,
+      transparent 210deg
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+  .glow-border:hover::before,
+  .glow-border:focus-within::before {
+    opacity: 1;
+    animation: border-spin 4s linear infinite;
+  }
+
+  /* Inclinaison 3D pilotée par useTilt (variables --rx / --ry) */
+  .tilt {
+    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
+      translateY(var(--lift, 0px));
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.5s, box-shadow 0.5s;
+    will-change: transform;
+  }
+  .tilt:hover {
+    --lift: -4px;
+  }
+  /* Reflet qui suit le pointeur */
+  .tilt-sheen::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      28rem circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 255, 255, 0.06),
+      transparent 45%
+    );
+    opacity: 0;
+    transition: opacity 0.4s;
+    pointer-events: none;
+  }
+  .tilt-sheen:hover::after {
+    opacity: 1;
   }
 
   .gradient-text {
-    @apply bg-gradient-to-r from-accent-soft via-white to-cyan-glow bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-accent-soft via-[#c4b5fd] to-cyan-glow bg-clip-text text-transparent;
     background-size: 200% auto;
   }
 
   .btn-primary {
     @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-xl
-           bg-gradient-to-r from-accent-deep to-accent px-7 py-3.5 font-medium text-white
-           shadow-glow transition-transform duration-300 hover:scale-[1.03] active:scale-[0.98];
+           bg-gradient-to-r from-accent-deep via-accent to-[#6366f1] px-7 py-3.5 font-medium text-white
+           shadow-glow transition-[transform,box-shadow] duration-300 hover:-translate-y-0.5
+           active:translate-y-0;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 0 1px rgba(139, 92, 246, 0.5), 0 10px 40px -8px rgba(139, 92, 246, 0.7),
+      0 0 60px -20px rgba(34, 211, 238, 0.6);
+  }
+  /* Reflet qui balaie le bouton au survol */
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 30%, rgba(255, 255, 255, 0.25) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+  }
+  .btn-primary:hover::after {
+    transform: translateX(120%);
   }
 
   .btn-ghost {
     @apply inline-flex items-center justify-center gap-2 rounded-xl border border-white/10
            bg-white/[0.03] px-7 py-3.5 font-medium text-slate-200 backdrop-blur-sm
-           transition-all duration-300 hover:border-accent/40 hover:bg-accent/10 hover:text-white;
+           transition-all duration-300 hover:-translate-y-0.5 hover:border-cyan-glow/40
+           hover:bg-cyan-glow/[0.07] hover:text-white;
+  }
+  .btn-ghost:hover {
+    box-shadow: 0 10px 30px -12px rgba(34, 211, 238, 0.45);
   }
 
   .chip {
     @apply inline-flex items-center rounded-full border border-white/10 bg-white/[0.04]
            px-3 py-1 text-xs font-medium text-slate-300 transition-colors;
+  }
+
+  /* Icône qui réagit au survol de son parent .group */
+  .icon-pop {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .group:hover .icon-pop {
+    transform: translateY(-2px) scale(1.12) rotate(-4deg);
   }
 }
 
@@ -96,6 +202,22 @@
     opacity: 1;
     transform: none;
   }
+
+  /* Filet de titre qui se déploie à la révélation */
+  .reveal .draw-line {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.25s;
+  }
+  .reveal.is-visible .draw-line {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes border-spin {
+  to {
+    --border-angle: 360deg;
+  }
 }
 
 /* Respect des préférences d'accessibilité : on coupe tout mouvement */
@@ -112,8 +234,13 @@
     transition-duration: 0.01ms !important;
   }
 
-  .reveal {
+  .reveal,
+  .reveal .draw-line {
     opacity: 1;
     transform: none;
+  }
+
+  .tilt {
+    transform: none !important;
   }
 }

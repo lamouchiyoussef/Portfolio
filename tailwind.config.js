@@ -11,12 +11,12 @@ export default {
     extend: {
       colors: {
         ink: {
-          950: '#07070b',
-          900: '#0a0a0f',
-          850: '#0f0f16',
-          800: '#14141d',
-          700: '#1c1c28',
-          600: '#282836',
+          950: '#05060A',
+          900: '#08090D',
+          850: '#0D0F15',
+          800: '#11131A',
+          700: '#191C25',
+          600: '#262A36',
         },
         accent: {
           DEFAULT: '#8b5cf6',
@@ -25,6 +25,10 @@ export default {
         },
         cyan: {
           glow: '#22d3ee',
+        },
+        // Gris secondaire éclairci : contraste ≥ 4,5:1 sur le fond #08090D (WCAG AA).
+        slate: {
+          500: '#8391A7',
         },
       },
       fontFamily: {
@@ -43,6 +47,7 @@ export default {
         glow: '0 0 0 1px rgba(139,92,246,0.25), 0 8px 40px -12px rgba(139,92,246,0.45)',
         'glow-cyan': '0 0 0 1px rgba(34,211,238,0.25), 0 8px 40px -12px rgba(34,211,238,0.4)',
         card: '0 1px 0 0 rgba(255,255,255,0.05) inset, 0 20px 50px -20px rgba(0,0,0,0.8)',
+        lift: '0 1px 0 0 rgba(255,255,255,0.06) inset, 0 30px 60px -25px rgba(0,0,0,0.9), 0 0 40px -10px rgba(139,92,246,0.35)',
       },
       keyframes: {
         'fade-up': {

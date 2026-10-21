@@ -7,12 +7,10 @@ import {
   Loader2,
   CheckCircle2,
   AlertCircle,
-  Linkedin,
-  Github,
 } from 'lucide-react';
 import emailjs from '@emailjs/browser';
 import { Section, SectionHeading, Backdrop } from '../ui/Section';
-import { PROFILE } from '../../data/profile';
+import { PROFILE, SOCIALS } from '../../data/profile';
 
 const Contact = () => {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
@@ -55,8 +53,8 @@ const Contact = () => {
 
       <SectionHeading
         eyebrow="Contact"
-        title="Travaillons ensemble"
-        description="Un poste Full Stack .NET / Angular, un projet industriel ou une simple question ? Je réponds sous 48 h."
+        title="Construisons votre prochaine application"
+        description="Un poste Full Stack .NET / Angular, un projet industriel ou une simple question : discutons de vos besoins."
       />
 
       <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[0.85fr_1.15fr]">
@@ -83,36 +81,35 @@ const Contact = () => {
             content={PROFILE.location}
           />
 
-          <div className="glass mt-auto p-6">
+          <div className="glass glow-border mt-auto p-6">
             <p className="mb-4 text-sm leading-relaxed text-slate-400">
-              Vous préférez les réseaux ? On peut aussi échanger là-bas.
+              Le plus direct reste l'email — ou retrouvez-moi sur mes profils professionnels.
             </p>
-            <div className="flex gap-3">
-              <a
-                href={PROFILE.linkedin}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/10 py-2.5 text-sm text-slate-300 transition-colors hover:border-accent/40 hover:text-white"
-              >
-                <Linkedin size={16} />
-                LinkedIn
-              </a>
-              <a
-                href={PROFILE.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex flex-1 items-center justify-center gap-2 rounded-lg border border-white/10 py-2.5 text-sm text-slate-300 transition-colors hover:border-accent/40 hover:text-white"
-              >
-                <Github size={16} />
-                GitHub
-              </a>
-            </div>
+            <a href={`mailto:${PROFILE.email}`} className="btn-primary w-full py-3 text-sm">
+              <Mail size={16} />
+              Écrire un email
+            </a>
+            <ul className="mt-4 grid grid-cols-3 gap-2" aria-label="Profils professionnels">
+              {SOCIALS.filter((s) => s.href.startsWith('http')).map(({ href, label, Icon }) => (
+                <li key={label}>
+                  <a
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/10 py-2.5 text-sm text-slate-300 transition-colors hover:border-accent/40 hover:text-white"
+                  >
+                    <Icon size={16} className="icon-pop" />
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
         {/* Formulaire */}
         <div
-          className="reveal glass p-7 sm:p-9"
+          className="reveal glass glow-border p-7 sm:p-9"
           style={{ '--reveal-delay': '180ms' } as React.CSSProperties}
         >
           <span

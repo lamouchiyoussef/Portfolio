@@ -1,8 +1,4 @@
-import zombieImage from '../components/assets/zombie.jpeg';
-import b2 from '../components/assets/b2.jpg';
-import industrie from '../components/assets/industrie.jpg';
-import food from '../components/assets/food.jpg';
-import labo from '../components/assets/labo.jpg';
+import type { CoverKind } from '../components/Projects/ProjectCover';
 import gitlabProjects from './gitlab-projects.json';
 import { GITLAB_OVERRIDES } from './gitlab-overrides';
 import { GITLAB_CURATED_PROJECTS } from './projects-gitlab';
@@ -45,6 +41,8 @@ export interface Project {
   features: string[];
   architecture?: string;
   impact?: string;
+  /** Couverture SVG originale ; `image` (capture réelle) prime si fournie. */
+  cover: CoverKind;
   image?: string;
   demos: ProjectLink[];
   docs: ProjectLink[];
@@ -92,7 +90,7 @@ const MANUAL_PROJECTS: Project[] = [
     architecture:
       'Frontend Angular · API backend (.NET 8, Express.js pour la B2) · base relationnelle (SQL Server / MySQL) · broker MQTT pour les capteurs.',
     impact: 'Déployé sur 5 lignes de production',
-    image: b2,
+    cover: 'traceability',
     demos: [
       { label: 'Démo v2', href: 'https://drive.google.com/file/d/13-JVxOhl2eOvODEzRTJrVReCjjjN8_SB/view' },
       { label: 'Démo v1', href: 'https://drive.google.com/file/d/1GIjVT55QWKRb0Q4zYKaTqP05KTj6mtnB/view' },
@@ -119,7 +117,7 @@ const MANUAL_PROJECTS: Project[] = [
       'Alerting',
       'Notifications en temps réel',
     ],
-    image: food,
+    cover: 'sensors',
     demos: [
       { label: 'Démo', href: 'https://drive.google.com/file/d/17vhZJ6yzgAXHI6m4rLgjLFh3jQZZdBrV/view?usp=sharing' },
     ],
@@ -138,7 +136,7 @@ const MANUAL_PROJECTS: Project[] = [
     technologies: ['Angular', 'Tailwind CSS', 'API REST .NET'],
     features: ["Commande d'analyses", 'Suivi des analyses'],
     impact: 'Déployée chez 5 clients',
-    image: labo,
+    cover: 'b2b',
     demos: [],
     docs: [],
     visibility: 'private',
@@ -165,7 +163,7 @@ const MANUAL_PROJECTS: Project[] = [
     ],
     architecture:
       'Frontend web Angular · API .NET + SQL Server · deux apps mobiles Ionic 8 / Angular 18 / Capacitor 8 partageant la même API et la même authentification.',
-    image: industrie,
+    cover: 'factory',
     demos: [
       { label: 'Démo', href: 'https://drive.google.com/file/d/1MXuMq4rUuHyy4dVBXskIsFr1TL_iGKC-/view?usp=sharing' },
     ],
@@ -184,6 +182,7 @@ const MANUAL_PROJECTS: Project[] = [
     category: 'professionnel',
     technologies: ['Angular', '.NET 8', 'SQL Server', 'Tailwind CSS'],
     features: ['Gestion des clients (CRM)', "Gestion d'inventaire", 'Filtres avancés et exports'],
+    cover: 'crm',
     demos: [
       { label: 'Démo', href: 'https://drive.google.com/file/d/1PJhWvy8Rezf4bdqt5vCU-keJCWroMIuQ/view?usp=sharing' },
     ],
@@ -203,7 +202,7 @@ const MANUAL_PROJECTS: Project[] = [
     date: '2022-06-30',
     technologies: ['Unity', 'C#', 'Réalité Augmentée'],
     features: ['Gameplay', 'Détection de surface', 'Interface utilisateur'],
-    image: zombieImage,
+    cover: 'ar',
     demos: [
       { label: 'Démo', href: 'https://drive.google.com/file/d/1_HiwYobVRIkXTDCdCVE0Y4fjfeUOYHnd/view' },
     ],
@@ -254,6 +253,7 @@ const fromGitlab = (p: GitlabProject): Project | null => {
     features: o.features ?? p.features,
     architecture: o.architecture,
     impact: o.impact,
+    cover: o.cover ?? 'b2b',
     image: o.image ?? (isPublic ? p.image : undefined),
     demos: o.demos ?? (p.demoUrl ? [{ label: 'Démo en ligne', href: p.demoUrl }] : []),
     docs: [],

@@ -1,4 +1,5 @@
 import type { Project, ProjectCategory, ProjectLink, ProjectStatus } from './projects';
+import type { CoverKind } from '../components/Projects/ProjectCover';
 
 /**
  * Choix éditoriaux sur les projets synchronisés depuis GitLab, indexés par
@@ -24,6 +25,7 @@ export interface GitlabOverride {
   features?: string[];
   architecture?: string;
   impact?: string;
+  cover?: CoverKind;
   image?: Project['image'];
   demos?: ProjectLink[];
 }

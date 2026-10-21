@@ -1,6 +1,7 @@
 import React from 'react';
 import { Briefcase, GraduationCap, Building2, MapPin } from 'lucide-react';
 import { Section, SectionHeading, Backdrop } from '../ui/Section';
+import { useScrollFill } from '../../hooks/useScrollFill';
 
 interface Job {
   date: string;
@@ -69,6 +70,8 @@ const JOBS: Job[] = [
 ];
 
 const Experience = () => {
+  const timeline = useScrollFill<HTMLDivElement>();
+
   return (
     <Section id="experience" className="bg-ink-950/40">
       <Backdrop variant="cyan" />
@@ -79,11 +82,13 @@ const Experience = () => {
         description="Des applications métier en production pour l'industrie, livrées en équipe Agile."
       />
 
-      <div className="relative mx-auto max-w-4xl">
-        {/* Ligne de temps */}
+      <div ref={timeline} className="relative mx-auto max-w-4xl">
+        {/* Ligne de temps : rail discret + tracé lumineux qui progresse au défilement */}
+        <div aria-hidden className="absolute bottom-0 left-[19px] top-2 w-px bg-white/[0.07] sm:left-[23px]" />
         <div
           aria-hidden
-          className="absolute bottom-0 left-[19px] top-2 w-px bg-gradient-to-b from-accent/60 via-accent/20 to-transparent sm:left-[23px]"
+          className="absolute left-[19px] top-2 w-px origin-top bg-gradient-to-b from-accent via-accent-soft to-cyan-glow shadow-[0_0_12px_rgba(139,92,246,0.8)] sm:left-[23px]"
+          style={{ height: 'calc((100% - 0.5rem) * var(--fill, 0))' }}
         />
 
         <div className="space-y-10">
@@ -105,7 +110,7 @@ const TimelineItem = ({ job, index }: { job: Job; index: number }) => {
       style={{ '--reveal-delay': `${index * 120}ms` } as React.CSSProperties}
     >
       {/* Point sur la ligne */}
-      <span className="absolute left-0 top-6 z-10 grid h-10 w-10 place-items-center rounded-xl border border-white/10 bg-ink-850 text-accent-soft sm:h-12 sm:w-12">
+      <span className="absolute left-0 top-6 z-10 grid h-10 w-10 place-items-center rounded-xl border border-accent/30 bg-ink-850 text-accent-soft shadow-[0_0_20px_-6px_rgba(139,92,246,0.8)] sm:h-12 sm:w-12">
         <Icon className="h-[18px] w-[18px]" />
         {job.current && (
           <span
@@ -115,7 +120,7 @@ const TimelineItem = ({ job, index }: { job: Job; index: number }) => {
         )}
       </span>
 
-      <article className="glass glass-hover group p-6 sm:p-8">
+      <article className="glass glass-hover glow-border group p-6 sm:p-8">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
           <div>
             <h3 className="font-display text-xl font-semibold text-white">{job.title}</h3>

@@ -42,7 +42,7 @@ export const SectionHeading = ({
     }`}
   >
     <span className="mb-4 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[0.2em] text-accent-soft">
-      <span className="h-px w-8 bg-gradient-to-r from-transparent to-accent-soft" />
+      <span className="draw-line h-px w-8 bg-gradient-to-r from-transparent to-accent-soft" />
       {eyebrow}
     </span>
     <h2 className="font-display text-3xl font-bold leading-tight text-white sm:text-4xl md:text-[2.75rem]">

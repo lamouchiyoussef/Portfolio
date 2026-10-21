@@ -1,6 +1,7 @@
 import React from 'react';
 import { GraduationCap, Award, HeartHandshake, MapPin } from 'lucide-react';
 import { Section, SectionHeading, Backdrop } from '../ui/Section';
+import { useScrollFill } from '../../hooks/useScrollFill';
 
 const DEGREES = [
   {
@@ -26,6 +27,8 @@ const VOLUNTEERING = [
 ];
 
 const Education = () => {
+  const timeline = useScrollFill<HTMLDivElement>();
+
   return (
     <Section id="education">
       <Backdrop variant="cyan" />
@@ -37,15 +40,21 @@ const Education = () => {
       />
 
       <div className="mx-auto grid max-w-5xl gap-6 lg:grid-cols-[1.4fr_1fr]">
-        {/* Diplômes */}
-        <div className="space-y-5">
+        {/* Diplômes, en ligne de temps */}
+        <div ref={timeline} className="relative space-y-5">
+          <div aria-hidden className="absolute bottom-6 left-[47px] top-6 w-px bg-white/[0.07] sm:left-[51px]" />
+          <div
+            aria-hidden
+            className="absolute left-[47px] top-6 w-px bg-gradient-to-b from-accent to-cyan-glow shadow-[0_0_12px_rgba(139,92,246,0.8)] sm:left-[51px]"
+            style={{ height: 'calc((100% - 3rem) * var(--fill, 0))' }}
+          />
           {DEGREES.map((d, i) => (
             <article
               key={d.title}
-              className="reveal glass glass-hover group flex gap-5 p-6 sm:p-7"
+              className="reveal glass glass-hover glow-border group relative flex gap-5 p-6 sm:p-7"
               style={{ '--reveal-delay': `${i * 110}ms` } as React.CSSProperties}
             >
-              <span className="grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl bg-gradient-to-br from-accent/25 to-cyan-glow/10 text-accent-soft transition-transform duration-500 group-hover:scale-110">
+              <span className="icon-pop relative z-10 grid h-12 w-12 flex-shrink-0 place-items-center rounded-xl border border-accent/30 bg-ink-850 text-accent-soft shadow-[0_0_20px_-6px_rgba(139,92,246,0.8)]">
                 <GraduationCap className="h-5 w-5" />
               </span>
               <div className="min-w-0">
@@ -71,7 +80,7 @@ const Education = () => {
           className="reveal flex flex-col gap-5"
           style={{ '--reveal-delay': '160ms' } as React.CSSProperties}
         >
-          <div className="glass p-6 sm:p-7">
+          <div className="glass glow-border p-6 sm:p-7">
             <h3 className="mb-4 flex items-center gap-2.5 font-display text-base font-semibold text-white">
               <Award className="h-[18px] w-[18px] text-amber-300" />
               Certifications
@@ -86,7 +95,7 @@ const Education = () => {
             </ul>
           </div>
 
-          <div className="glass flex-1 p-6 sm:p-7">
+          <div className="glass glow-border flex-1 p-6 sm:p-7">
             <h3 className="mb-4 flex items-center gap-2.5 font-display text-base font-semibold text-white">
               <HeartHandshake className="h-[18px] w-[18px] text-pink-400" />
               Bénévolat

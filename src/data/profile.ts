@@ -1,10 +1,10 @@
-import { Github, Linkedin, Mail } from 'lucide-react';
+import { Github, Gitlab, Linkedin, Mail } from 'lucide-react';
 
 /** Coordonnées uniques du site : à modifier ici seulement. */
 export const PROFILE = {
   name: 'Youssef Lamouchi',
   initials: 'YL',
-  title: 'Ingénieur en Informatique',
+  title: 'Ingénieur en informatique',
   role: 'Développeur Full Stack .NET / Angular',
   email: 'yousef.lamouchii@gmail.com',
   phone: '+216 22 554 114',
@@ -12,10 +12,13 @@ export const PROFILE = {
   location: 'Tunis, Tunisie',
   linkedin: 'https://www.linkedin.com/in/youssef-lamouchi/',
   github: 'https://github.com/lamouchiyoussef',
+  gitlab: 'https://gitlab.com/youssef.lamouchi',
+  site: 'https://lamouchiyoussef.github.io/Portfolio/',
 };
 
 export const SOCIALS = [
   { href: PROFILE.github, label: 'GitHub', Icon: Github },
+  { href: PROFILE.gitlab, label: 'GitLab', Icon: Gitlab },
   { href: PROFILE.linkedin, label: 'LinkedIn', Icon: Linkedin },
   { href: `mailto:${PROFILE.email}`, label: 'Email', Icon: Mail },
 ];

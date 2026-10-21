@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { X, PlayCircle, FileText, Gitlab, Lock, CheckCircle2, Layers } from 'lucide-react';
 import { CATEGORY_LABELS, STATUS_LABELS, type Project } from '../../data/projects';
+import ProjectCover from './ProjectCover';
 
 /**
  * Fenêtre de détails d'un projet. Basée sur <dialog> : focus piégé, fermeture
@@ -53,15 +54,17 @@ const ProjectModal = ({ project, onClose }: { project: Project | null; onClose: 
             <X size={18} />
           </button>
           <div className="max-h-[92vh] overflow-y-auto">
-            {project.image && (
-              <div className="relative h-48 sm:h-64">
+            <div className="relative h-48 sm:h-64">
+              {project.image ? (
                 <img src={project.image} alt="" className="h-full w-full object-cover" />
-                <div
-                  aria-hidden
-                  className="absolute inset-0 bg-gradient-to-t from-ink-850 to-transparent"
-                />
-              </div>
-            )}
+              ) : (
+                <ProjectCover kind={project.cover} className="h-full w-full" />
+              )}
+              <div
+                aria-hidden
+                className="absolute inset-0 bg-gradient-to-t from-ink-850 to-transparent"
+              />
+            </div>
 
             <div className="p-6 sm:p-9">
               <div className="flex flex-wrap items-center gap-2">

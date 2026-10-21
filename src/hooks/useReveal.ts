@@ -94,16 +94,14 @@ export const useActiveSection = (ids: string[]) => {
 
     if (!sections.length) return;
 
+    // Section active = celle qui croise une ligne fine au milieu de l'écran.
+    // Fonctionne aussi pour les sections plus hautes que la fenêtre.
     const observer = new IntersectionObserver(
       (entries) => {
-        // On garde la section la plus visible à l'écran.
-        const best = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-        if (best) setActive(best.target.id);
+        const hit = entries.find((e) => e.isIntersecting);
+        if (hit) setActive(hit.target.id);
       },
-      { threshold: [0.25, 0.5, 0.75], rootMargin: '-80px 0px -40% 0px' }
+      { rootMargin: '-45% 0px -54% 0px', threshold: 0 }
     );
 
     sections.forEach((el) => observer.observe(el));
